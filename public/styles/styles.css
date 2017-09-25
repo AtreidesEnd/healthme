@@ -71,7 +71,7 @@ html, body, #app, .app-container {
 }
 
 .app-sidenav-item {
-  padding: 20px 10px;
+  padding: 10px 10px;
   display: flex;
   justify-content: space-between;
   text-decoration: none;
@@ -88,6 +88,11 @@ html, body, #app, .app-container {
   border-radius: 5px 5px 0 0;
 }
 
+.app-sidenav-item.selected {
+  background-color: var(--mc2);
+  color: white;
+}
+
 .app-sidenav-item:last-child {
   border-radius: 0 0 5px 5px;
   border-bottom: none;
@@ -101,11 +106,27 @@ html, body, #app, .app-container {
 
 .journal-header {
   border-radius: 5px 5px 0 0;
-  padding: 20px 10px;
+  padding: 10px 10px;
+  border-bottom: 1px solid var(--mc1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.journal-header-title {
   font-size: 1.5em;
   font-style: italic;
   color: var(--mc1);
-  border-bottom: 1px solid var(--mc1);
+}
+
+.journal-header button {
+  margin: 0;
+  background-color: var(--mc1);
+  color: white;
+}
+
+.journal-header button:hover {
+  background-color: var(--mc2);
 }
 
 .journal-entry:hover {
