@@ -14,6 +14,7 @@ html, body, #app, .app-container {
   --cc2:#4736F4;
   --ac1:#53F3C3;
   --ac2:#95F6D9;
+  --hov:#CEE0F5;
 }
 
 /* Header */
@@ -42,7 +43,8 @@ html, body, #app, .app-container {
 /*  Main container    */
 .app-main-container {
   height: 100%;
-  width: 100%;
+  width: 70%;
+  padding-top: 20px;
   margin: auto;
   display: flex;
   align-items: flex-start;
@@ -51,12 +53,12 @@ html, body, #app, .app-container {
 /*  Nav  */
 
 .app-sidenav {
-  flex: 0 0 200px;
+  flex: 0 0 250px;
   height: auto;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  margin: 20px 0 0 20px;
+  margin-right: 20px;
   border-radius: 5px;
 }
 
@@ -73,9 +75,14 @@ html, body, #app, .app-container {
   display: flex;
   justify-content: space-between;
   text-decoration: none;
+  cursor: pointer;
   color: var(--mc2);
   border-bottom: 1px solid var(--mc1);
 }
+
+.app-sidenav-item:hover {
+  background-color: var(--hov);
+};
 
 .app-sidenav-item:first-child {
   border-radius: 5px 5px 0 0;
@@ -85,6 +92,26 @@ html, body, #app, .app-container {
   border-radius: 0 0 5px 5px;
   border-bottom: none;
 }
+
+/*  Journal Module View */
+.journal-container {
+  flex: 1;
+  border-radius: 5px;
+}
+
+.journal-header {
+  border-radius: 5px 5px 0 0;
+  padding: 20px 10px;
+  font-size: 1.5em;
+  font-style: italic;
+  color: var(--mc1);
+  border-bottom: 1px solid var(--mc1);
+}
+
+.journal-entry:hover {
+  background-color: var(--hov);
+}
+
 
 /* Util */
 .shadow {
