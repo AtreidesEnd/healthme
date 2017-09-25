@@ -1,0 +1,94 @@
+* {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+html, body, #app, .app-container {
+  height: 100%;
+}
+
+:root {
+  --mc1:#60A5F3;
+  --mc2:#0373F0;
+  --cc1:#ABA3F7;
+  --cc2:#4736F4;
+  --ac1:#53F3C3;
+  --ac2:#95F6D9;
+}
+
+/* Header */
+.app-header {
+  height: 48px;
+  background-color: var(--mc1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.app-logo {
+  font-size: 2em;
+  font-style: italic;
+  color: white;
+  margin-left: 20px;
+}
+
+.app-header-nav-link {
+  text-decoration: none;
+  color: white;
+  font-size: 1.2em;
+  margin: 0 10px;
+}
+
+/*  Main container    */
+.app-main-container {
+  height: 100%;
+  width: 100%;
+  margin: auto;
+  display: flex;
+  align-items: flex-start;
+}
+
+/*  Nav  */
+
+.app-sidenav {
+  flex: 0 0 200px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  margin: 20px 0 0 20px;
+  border-radius: 5px;
+}
+
+.app-sidenav-header {
+  font-size: 1.3em;
+  color: white;
+  background-color: var(--mc1);
+  border-radius: 5px 5px 0 0;
+  padding: 10px 10px;
+}
+
+.app-sidenav-item {
+  padding: 20px 10px;
+  display: flex;
+  justify-content: space-between;
+  text-decoration: none;
+  color: var(--mc2);
+  border-bottom: 1px solid var(--mc1);
+}
+
+.app-sidenav-item:first-child {
+  border-radius: 5px 5px 0 0;
+}
+
+.app-sidenav-item:last-child {
+  border-radius: 0 0 5px 5px;
+  border-bottom: none;
+}
+
+/* Util */
+.shadow {
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14),
+   0 3px 1px -2px rgba(0,0,0,0.12),
+   0 1px 5px 0 rgba(0,0,0,0.2) !important;
+}
