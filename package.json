@@ -1,0 +1,46 @@
+{
+  "name": "healthme",
+  "version": "0.0.1",
+  "description": "An app to help you keep a journal of what you've eaten, done, and how you feel - find out what's working or not working for you!",
+  "main": "server/app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack --watch & live-server --open=public/index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AtreidesEnd/healthme.git"
+  },
+  "author": "Jared Meek",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AtreidesEnd/healthme/issues"
+  },
+  "homepage": "https://github.com/AtreidesEnd/healthme#readme",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "webpack": "^3.6.0"
+  },
+  "dependencies": {
+    "axios": "^0.16.2",
+    "body-parser": "^1.18.2",
+    "classnames": "^2.2.5",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.15.5",
+    "express-session": "^1.15.5",
+    "jquery": "^3.2.1",
+    "lodash": "^4.17.4",
+    "mongodb": "^2.2.31",
+    "mongoose": "^4.11.13",
+    "prop-types": "^15.5.10",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "react-redux": "^5.0.6",
+    "redux": "^3.7.2"
+  }
+}
