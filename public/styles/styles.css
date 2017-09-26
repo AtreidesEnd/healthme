@@ -176,12 +176,7 @@ html, body, #app, .app-container {
   width: 100%;
 }
 
-.inline-form-label {
-  flex: 0 0 100px;
-  font-size: 1.1em;
-  margin-right: 30px;
-  color: grey;
-}
+
 
 .new-entry-form-submit-div {
   display: flex;
@@ -190,12 +185,12 @@ html, body, #app, .app-container {
   padding: 10px;
 }
 
-.mdl-button--colored {
-  background-color: var(--mc1) !important;
-}
-
-.mdl-button {
-  border-radius: 5px;
+.new-entry-form-rating {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+  padding-left: 20px;
 }
 
 /* Util */
@@ -225,7 +220,23 @@ html, body, #app, .app-container {
   margin-right: 0;
 }
 
+.inline-form-label {
+  flex: 0 0 auto;
+  min-width: 100px;
+  font-size: 1.1em;
+  margin-right: 30px;
+  color: grey;
+}
+
 .inline-form-group .inline-form-label {
   margin-right: 10px;
   flex: 0 0 auto;
+}
+
+.mdl-button--colored {
+  background-color: var(--mc1) !important;
+}
+
+.mdl-button {
+  border-radius: 5px;
 }
