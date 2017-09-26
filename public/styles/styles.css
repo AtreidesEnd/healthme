@@ -135,8 +135,58 @@ html, body, #app, .app-container {
   background-color: var(--mc2);
 }
 
+.journal-entry {
+  height: auto !important;
+}
+
 .journal-entry:hover {
   background-color: var(--hov);
+}
+
+.journal-entry-icon-div {
+  margin-right: 20px;
+}
+
+.journal-entry-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items : stretch;
+  justify-content: flex-start;
+  height: auto !important;
+}
+
+.journal-entry-title {
+  padding-bottom: 5px;
+}
+
+.journal-entry-desc {
+  height: auto !important;
+}
+
+.journal-entry-details {
+  height: auto !important;
+  padding-top: 5px;
+}
+
+.journal-entry-details {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-content: flex-start;
+}
+
+.entry-detail {
+  font-size: .8em;
+  color: var(--mc1);
+  margin-right: 15px;
+}
+
+.journal-entry-time {
+  height: auto !important;
+  font-size: .8em;
+  font-style: italic;
+  color: grey;
 }
 
 /*  New entry forms  */
@@ -202,13 +252,6 @@ html, body, #app, .app-container {
   border-radius: 5px;
 }
 
-/* Util */
-.shadow {
-  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14),
-   0 3px 1px -2px rgba(0,0,0,0.12),
-   0 1px 5px 0 rgba(0,0,0,0.2) !important;
-}
-
 .inline-form {
   display: flex;
   flex-direction: row;
@@ -245,6 +288,13 @@ html, body, #app, .app-container {
 .inline-form-group .inline-form-label {
   margin-right: 10px;
   flex: 0 0 auto;
+}
+
+/* Util */
+.shadow {
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14),
+   0 3px 1px -2px rgba(0,0,0,0.12),
+   0 1px 5px 0 rgba(0,0,0,0.2) !important;
 }
 
 .mdl-button--colored {
