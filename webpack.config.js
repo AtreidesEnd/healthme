@@ -11,7 +11,7 @@ module.exports = {
       {
         test: /\.jsx?$/,
         // include: [__dirname + '/src'],
-        // exclude: /node_modules/,
+        // exclude: /node_modules/,  // react widgets simple number localizer needs to be babel'd
         loader: 'babel-loader',
         query: {
           presets: ['react', 'es2015', 'stage-2']
