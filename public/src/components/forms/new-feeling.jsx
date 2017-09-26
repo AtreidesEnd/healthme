@@ -10,7 +10,7 @@ momentLocalizer(moment);
 const allergens = ['Gluten', 'Red meat', 'Dairy', 'Nuts'];
 const preps = ['Grilled', 'Fried', 'Baked', 'Steamed'];
 
-export default class NewMeal extends Component {
+export default class NewFeeling extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -25,10 +25,10 @@ export default class NewMeal extends Component {
         <div className="new-entry-header"><span>New Meal</span></div>
         <form onSubmit={this.onSubmit}>
           <div className="inline-form">
-            <TextFieldInput id="title" name="title" label="Title" value={this.state.title} onChange={e => this.setState({ title: e.target.value})} />
+            <TextFieldInput id="title" name="title" value={this.state.title} onChange={e => this.setState({ title: e.target.value})} />
             <DateTimePicker className="new-entry-datetime" name="datetime" value={this.state.datetime} onChange={datetime => this.setState({ datetime })}/>
           </div>
-          <TextAreaInput id="desc" name="desc" label="Description" value={this.state.desc} onChange={e => this.setState({ desc: e.target.value})} />
+          <TextAreaInput id="desc" name="desc" value={this.state.desc} onChange={e => this.setState({ desc: e.target.value})} />
           <div className="inline-form">
             <div className="inline-form-label">Allergens:</div>
             <Multiselect name="allergens" className="new-entry-form-select" name="allergens" data={allergens} value={this.state.allergens} onChange={allergens => this.setState({allergens})} />
