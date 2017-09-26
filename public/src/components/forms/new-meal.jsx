@@ -16,21 +16,35 @@ export default class NewMeal extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      // form data
       datetime: new Date(), title: '', desc: '',
       allergens: [], preps: [],
+      // form config
+      allerOpts: [], prepOpts: []
     };
   }
 
   componentDidMount() {
     window.componentHandler.upgradeElements(findDOMNode(this));
+    this.getFormConfig();
   }
+
   componentWillUnmount() {
     const element = findDOMNode(this);
     window.componentHandler.downgradeElements(element);
   }
 
+  getFormConfig() {
+    axios.get('/api/formconfig', {params: {type: 'meal', user: 'user1'}})
+      .then(resp => {
+        this.setState({
+          allerOpts: resp.data.allergens,
+          prepOpts: resp.data.preps,
+        });
+      }).catch(err => console.log('Error: ', err));
+  }
+
   handleSubmit(e) {
-    console.log(e);
     e && e.preventDefault();
     let formData = {
       type: 'Meal', title: this.state.title, desc: this.state.desc,
@@ -59,17 +73,24 @@ export default class NewMeal extends Component {
           <div className="new-entry-header"><span>New Meal</span></div>
           <form onSubmit={(e) => this.handleSubmit(e)}>
             <div className="inline-form">
-              <TextFieldInput id="title" name="title" label="Title" value={this.state.title} onChange={e => this.setState({ title: e.target.value})} />
-              <DateTimePicker className="new-entry-datetime" name="datetime" value={this.state.datetime} onChange={datetime => this.setState({ datetime })}/>
+              <TextFieldInput id="title" name="title" label="Title" value={this.state.title}
+                onChange={e => this.setState({ title: e.target.value})} />
+              <DateTimePicker id="datetime" name="datetime" className="new-entry-datetime"
+                value={this.state.datetime} onChange={datetime => this.setState({ datetime })}/>
             </div>
-            <TextAreaInput id="desc" name="desc" label="Description" value={this.state.desc} onChange={e => this.setState({ desc: e.target.value})} />
+            <TextAreaInput id="desc" name="desc" label="Description" value={this.state.desc}
+              onChange={e => this.setState({ desc: e.target.value})} />
             <div className="inline-form">
               <div className="inline-form-label">Allergens:</div>
-              <Multiselect name="allergens" className="new-entry-form-select" name="allergens" data={allergens} value={this.state.allergens} onChange={allergens => this.setState({allergens})} />
+              <Multiselect id="allergens" name="allergens" className="new-entry-form-select"
+                data={this.state.allerOpts} value={this.state.allergens}
+                onChange={allergens => this.setState({allergens})} />
             </div>
             <div className="inline-form">
               <div className="inline-form-label">Preps:</div>
-              <Multiselect name="preps" className="new-entry-form-select" data={preps} value={this.state.preps} onChange={preps => this.setState({preps})} />
+              <Multiselect id="preps" name="preps" className="new-entry-form-select"
+                data={this.state.prepOpts} value={this.state.preps}
+                onChange={preps => this.setState({preps})} />
             </div>
             <div className="new-entry-form-submit-div">
               <button onClick={(e) => this.handleCancel(e)} className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Cancel</button>

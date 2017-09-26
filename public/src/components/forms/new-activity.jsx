@@ -9,25 +9,25 @@ import Multiselect from 'react-widgets/lib/Multiselect';
 import NumberPicker from 'react-widgets/lib/NumberPicker';
 import simpleNumberLocalizer from 'react-widgets-simple-number';
 simpleNumberLocalizer();
-
 moment.locale('en');
 momentLocalizer(moment);
-
-const activityTypes = ['Cardio', 'Weights', 'Stretching'];
-const intensities = ['Low', 'Medium', 'High', 'Extreme'];
 
 export default class NewActivity extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      // form data
       datetime: new Date(), title: '', desc: '',
       activityTypes: [], intensity: '', duration: 0,
-      submitSuccess: false
+      submitSuccess: false,
+      // form config
+      actTypeOpts: [], intensityOpts: []
     };
   }
 
   componentDidMount() {
     window.componentHandler.upgradeElements(findDOMNode(this));
+    this.getFormConfig();
   }
 
   componentWillUnmount() {
@@ -35,8 +35,17 @@ export default class NewActivity extends Component {
     window.componentHandler.downgradeElements(element);
   }
 
+  getFormConfig() {
+    axios.get('/api/formconfig', {params: {type: 'activity', user: 'user1'}})
+      .then(resp => {
+        this.setState({
+          actTypeOpts: resp.data.actTypes,
+          intensityOpts: resp.data.actInts
+        });
+      }).catch(err => console.log('Error: ', err));
+  }
+
   handleSubmit(e) {
-    console.log(e);
     e && e.preventDefault();
     let formData = {
       type: 'Activity', title: this.state.title, desc: this.state.desc,
@@ -68,7 +77,7 @@ export default class NewActivity extends Component {
             <div className="inline-form">
               <TextFieldInput id="title" name="title" label="Title" value={this.state.title}
                 onChange={e => this.setState({title: e.target.value})} />
-              <DateTimePicker className="new-entry-datetime" name="datetime"
+              <DateTimePicker id="datetime" name="datetime" className="new-entry-datetime" 
                 value={this.state.datetime} onChange={datetime => this.setState({ datetime: datetime })}/>
             </div>
             <TextAreaInput id="desc" name="desc" label="Description" value={this.state.desc}
@@ -76,14 +85,14 @@ export default class NewActivity extends Component {
             <div className="inline-form">
               <div className="inline-form-label">Activity Types:</div>
               <Multiselect name="activity-types" className="new-entry-form-select"
-                name="activity-types" data={activityTypes} value={this.state.activityTypes}
+                name="activity-types" data={this.state.actTypeOpts} value={this.state.activityTypes}
                 onChange={activityTypes => this.setState({activityTypes: activityTypes})} />
             </div>
             <div className="inline-form">
               <div className="inline-form-group">
                 <div className="inline-form-label">Intensity:</div>
                 <DropdownList name="intensity" className="new-entry-form-select"
-                  data={intensities} value={this.state.intensity}
+                  data={this.state.intensityOpts} value={this.state.intensity}
                   onChange={intensity => this.setState({intensity})} />
               </div>
               <div className="inline-form-group">

@@ -6,33 +6,43 @@ import momentLocalizer from 'react-widgets-moment';
 import DateTimePicker from 'react-widgets/lib/DateTimePicker';
 import Multiselect from 'react-widgets/lib/Multiselect';
 import Rating from 'react-rating';
-
 moment.locale('en');
 momentLocalizer(moment);
-
-const physicals = ['Great', 'Stomach ache', 'Bloated', 'Headache', 'Tired', 'Sore', 'Hungry'];
-const emotionals = ['Happy / Balanced', 'Sad / Depressed', 'Nervous / Stressed', 'Grumpy / Irritated', 'Bored', 'Meh / Numb'];
-const ills = ['Cold', 'Fever', 'Cough', 'Sore Throat', 'Indigestion'];
 
 export default class NewFeeling extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      // form data
       datetime: new Date(), title: '', desc: '',
-      overall: 0, physicals: [], emotionals: [], ills: []
+      overall: 0, physicals: [], emotionals: [], ills: [],
+      // form config
+      physOpts: [], emoOpts: [], illOpts: [],
     };
   }
 
   componentDidMount() {
     window.componentHandler.upgradeElements(findDOMNode(this));
+    this.getFormConfig();
   }
+
   componentWillUnmount() {
     const element = findDOMNode(this);
     window.componentHandler.downgradeElements(element);
   }
 
+  getFormConfig() {
+    axios.get('/api/formconfig', {params: {type: 'feeling', user: 'user1'}})
+      .then(resp => {
+        this.setState({
+          physOpts: resp.data.feelPhys,
+          emoOpts: resp.data.feelEmos,
+          illOpts: resp.data.feelIlls,
+        });
+      }).catch(err => console.log('Error: ', err));
+  }
+
   handleSubmit(e) {
-    console.log(e);
     e && e.preventDefault();
     let formData = {
       type: 'Feeling', title: this.state.title, desc: this.state.desc,
@@ -62,23 +72,32 @@ export default class NewFeeling extends Component {
           <div className="new-entry-header"><span>New Feeling</span></div>
           <form onSubmit={(e) => this.handleSubmit(e)}>
             <div className="inline-form">
-              <TextFieldInput id="title" name="title" label="Title" value={this.state.title} onChange={e => this.setState({ title: e.target.value})} />
-              <DateTimePicker className="new-entry-datetime" name="datetime" value={this.state.datetime} onChange={datetime => this.setState({ datetime })}/>
+              <TextFieldInput id="title" name="title" label="Title" value={this.state.title}
+                onChange={e => this.setState({ title: e.target.value})} />
+              <DateTimePicker id="datetime" name="datetime" className="new-entry-datetime"
+                value={this.state.datetime} onChange={datetime => this.setState({ datetime })}/>
             </div>
-            <TextAreaInput id="desc" name="desc" label="Description" value={this.state.desc} onChange={e => this.setState({ desc: e.target.value})} />
-            <RatingInput value={this.state.overall} id="overall-rating" name="overall-rating"
-              label="Overall Feeling:" onChange={overall => this.setState({overall})} />
+            <TextAreaInput id="desc" name="desc" label="Description" value={this.state.desc}
+              onChange={e => this.setState({ desc: e.target.value})} />
+            <RatingInput id="overall-rating" name="overall-rating" label="Overall Feeling:"
+              value={this.state.overall} onChange={overall => this.setState({overall})} />
             <div className="inline-form">
               <div className="inline-form-label">Physical:</div>
-              <Multiselect name="physicals" className="new-entry-form-select" name="physicals" data={physicals} value={this.state.physicals} onChange={physicals => this.setState({physicals})} />
+              <Multiselect id="physicals" name="physicals" className="new-entry-form-select"
+                name="physicals" data={this.state.physOpts} value={this.state.physicals}
+                onChange={physicals => this.setState({physicals})} />
             </div>
             <div className="inline-form">
               <div className="inline-form-label">Emotional:</div>
-              <Multiselect name="emotionals" className="new-entry-form-select" name="emotionals" data={emotionals} value={this.state.emotionals} onChange={emotionals => this.setState({emotionals})} />
+              <Multiselect id="emotionals" name="emotionals" className="new-entry-form-select"
+                data={this.state.emoOpts} value={this.state.emotionals}
+                onChange={emotionals => this.setState({emotionals})} />
             </div>
             <div className="inline-form">
               <div className="inline-form-label">Illness:</div>
-              <Multiselect name="ills" className="new-entry-form-select" name="ills" data={ills} value={this.state.ills} onChange={ills => this.setState({ills})} />
+              <Multiselect id="ills" name="ills" className="new-entry-form-select"
+                data={this.state.illOpts} value={this.state.ills}
+                onChange={ills => this.setState({ills})} />
             </div>
             <div className="new-entry-form-submit-div">
               <button onClick={(e) => this.handleCancel(e)} className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Cancel</button>

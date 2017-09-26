@@ -8,9 +8,9 @@ import NewActivity from './forms/new-activity.jsx';
 import NewFeeling from './forms/new-feeling.jsx';
 import NewDaily from './forms/new-daily.jsx';
 
-const defaultNavs = [{label: 'Journal', icon:'create', link:'/'},
-               {label: 'Trends', icon:'show_chart', link:'/trends'},
-               {label: 'History', icon:'history', link:'/history'}];
+const defaultNavs = [{label: 'Journal', icon: 'create', link: '/'},
+  {label: 'Trends', icon: 'show_chart', link: '/trends'},
+  {label: 'History', icon: 'history', link: '/history'}];
 
 export default class App extends Component {
   constructor(props) {
