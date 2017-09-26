@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import Header from './header.jsx';
 import Sidenav from './sidenav.jsx';
 import Journal from './journal.jsx';
@@ -23,21 +24,23 @@ const entries = [{type: 'daily', date:'2017-09-25', time:'18:00:00',
 export default class App extends Component {
   render() {
     return (
-      <div className='app-container'>
-        <Header loggedIn={true} />
-        <div className='app-main-container'>
-          <div className='app-sidebar-container'>
-            <Sidenav navs={defaultNavs} />
-          </div>
-          <div className='app-content-module'>
-            <Journal entries={entries} />
-            <NewDaily />
-            <NewFeeling />
-            <NewMeal />
-            <NewActivity />
+      <Router>
+        <div className='app-container'>
+          <Header loggedIn={true} />
+          <div className='app-main-container'>
+            <div className='app-sidebar-container'>
+              <Sidenav navs={defaultNavs} />
+            </div>
+            <div className='app-content-module'>
+              <Route exact path="/" render={props => (<Journal entries={entries} />)} />
+              <Route path="/new/daily" component={NewDaily} />
+              <Route path="/new/meal" component={NewMeal} />
+              <Route path="/new/activity" component={NewActivity} />
+              <Route path="/new/feeling" component={NewFeeling} />
+            </div>
           </div>
         </div>
-      </div>
+      </Router>
     );
   }
 }

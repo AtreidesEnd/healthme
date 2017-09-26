@@ -17,7 +17,7 @@ export default class NewFeeling extends Component {
     super(props);
     this.state = {
       datetime: new Date(), title: '', desc: '',
-      overall: null, physicals: [], emotionals: [], ills: []
+      overall: 0, physicals: [], emotionals: [], ills: []
     };
   }
 
@@ -60,7 +60,7 @@ const RatingInput = ({value, onChange, id, name, label}) => {
     <div className='inline-form'>
       <div className="inline-form-label">{label}</div>
       <Rating className="new-entry-form-rating" id={id} name={name} onChange={onChange}
-        placeholderRate={value} start={0} stop={5} />
+        initialRate={value} start={0} stop={5} />
     </div>
   );
 };

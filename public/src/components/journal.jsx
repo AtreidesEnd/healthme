@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Menu from './menu.jsx';
 
 const iconTypeMap = {'activity': 'directions_run',
@@ -23,10 +24,10 @@ const Journal = ({entries}) => (
 
 const renderMenu = () => {
   var children = [
-    <li key="daily" className="mdl-menu__item journal-new-menu-item">New Daily</li>,
-    <li key="feeling" className="mdl-menu__item journal-new-menu-item">New Feeling</li>,
-    <li key="meal" className="mdl-menu__item journal-new-menu-item">New Meal</li>,
-    <li key="activity" className="mdl-menu__item journal-new-menu-item">New Activity</li>,
+    <Link to="/new/daily" key="daily" className="mdl-menu__item journal-new-menu-item">New Daily</Link>,
+    <Link to="/new/feeling" key="feeling" className="mdl-menu__item journal-new-menu-item">New Feeling</Link>,
+    <Link to="/new/meal" key="meal" className="mdl-menu__item journal-new-menu-item">New Meal</Link>,
+    <Link to="/new/activity" key="activity" className="mdl-menu__item journal-new-menu-item">New Activity</Link>,
   ];
   return <Menu className="journal-new-menu" children={children} ripple={true} target={'new-journal-button'} />
 }

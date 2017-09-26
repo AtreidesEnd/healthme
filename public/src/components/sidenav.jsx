@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Sidenav = ({navs}) => (
   <div className='app-sidenav shadow'>
@@ -8,10 +9,10 @@ const Sidenav = ({navs}) => (
 );
 
 const SidenavItem = ({label, link, icon}) => (
-  <a className='app-sidenav-item' href={link}>
+  <Link to={`/nav${link}`} className='app-sidenav-item' href={link}>
     <span className='app-sidenav-item-label'>{label}</span>
     <i className='app-sidenav-item-icon material-icons'>{icon}</i>
-  </a>
+  </Link>
 );
 
 export default Sidenav;

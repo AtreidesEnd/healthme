@@ -2,10 +2,10 @@
   "name": "healthme",
   "version": "0.0.1",
   "description": "An app to help you keep a journal of what you've eaten, done, and how you feel - find out what's working or not working for you!",
-  "main": "server/app.js",
+  "main": "app/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack --watch & live-server --open=public/index.html"
+    "start": "webpack --watch & nodemon app/app.js"
   },
   "repository": {
     "type": "git",
@@ -43,6 +43,7 @@
     "react-dom": "^15.6.1",
     "react-rating": "^0.8.1",
     "react-redux": "^5.0.6",
+    "react-router-dom": "^4.2.2",
     "react-widgets": "^4.0.0",
     "react-widgets-moment": "^4.0.0",
     "react-widgets-simple-number": "^4.0.0",
