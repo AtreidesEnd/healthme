@@ -8,7 +8,7 @@ import NewActivity from './forms/new-activity.jsx';
 import NewFeeling from './forms/new-feeling.jsx';
 import NewDaily from './forms/new-daily.jsx';
 // mock data for now
-const defaultNavs = [{label: 'Journal', icon:'create', link:'/journal'},
+const defaultNavs = [{label: 'Journal', icon:'create', link:'/'},
                {label: 'Trends', icon:'show_chart', link:'/trends'},
                {label: 'History', icon:'history', link:'/history'}];
 const entries = [{type: 'daily', date:'2017-09-25', time:'18:00:00',

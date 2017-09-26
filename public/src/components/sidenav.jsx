@@ -9,7 +9,7 @@ const Sidenav = ({navs}) => (
 );
 
 const SidenavItem = ({label, link, icon}) => (
-  <Link to={`/nav${link}`} className='app-sidenav-item' href={link}>
+  <Link to={link} className='app-sidenav-item' href={link}>
     <span className='app-sidenav-item-label'>{label}</span>
     <i className='app-sidenav-item-icon material-icons'>{icon}</i>
   </Link>
