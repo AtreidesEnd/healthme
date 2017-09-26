@@ -32,10 +32,7 @@ export default class NewFeeling extends Component {
           </div>
           <TextAreaInput id="desc" name="desc" label="Description" value={this.state.desc} onChange={e => this.setState({ desc: e.target.value})} />
           <RatingInput value={this.state.overall} id="overall-rating" name="overall-rating"
-            label="Overall Feeling:" onChange={overall => {
-              console.log(overall);
-              this.setState({overall});
-            }} />
+            label="Overall Feeling:" onChange={overall => this.setState({overall})} />
           <div className="inline-form">
             <div className="inline-form-label">Physical:</div>
             <Multiselect name="physicals" className="new-entry-form-select" name="physicals" data={physicals} value={this.state.physicals} onChange={physicals => this.setState({physicals})} />

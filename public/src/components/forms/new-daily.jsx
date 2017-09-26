@@ -3,39 +3,47 @@ import moment from 'moment';
 import momentLocalizer from 'react-widgets-moment';
 import DateTimePicker from 'react-widgets/lib/DateTimePicker';
 import Multiselect from 'react-widgets/lib/Multiselect';
+import Rating from 'react-rating';
 
 moment.locale('en');
 momentLocalizer(moment);
 
-const allergens = ['Gluten', 'Red meat', 'Dairy', 'Nuts'];
-const preps = ['Grilled', 'Fried', 'Baked', 'Steamed'];
+const physicals = ['Great', 'Stomach ache', 'Bloated', 'Headache', 'Tired', 'Sore', 'Hungry'];
+const emotionals = ['Happy / Balanced', 'Sad / Depressed', 'Nervous / Stressed', 'Grumpy / Irritated', 'Bored', 'Meh / Numb'];
+const ills = ['Cold', 'Fever', 'Cough', 'Sore Throat', 'Indigestion'];
 
 export default class NewDaily extends Component {
   constructor(props) {
     super(props);
     this.state = {
       datetime: new Date(), title: '', desc: '',
-      allergens: [], preps: [],
+      overall: null, physicals: [], emotionals: [], ills: []
     };
   }
 
   render() {
     return (
       <div className="new-entry-form-div shadow">
-        <div className="new-entry-header"><span>New Meal</span></div>
+        <div className="new-entry-header"><span>New Daily</span></div>
         <form onSubmit={this.onSubmit}>
           <div className="inline-form">
-            <TextFieldInput id="title" name="title" value={this.state.title} onChange={e => this.setState({ title: e.target.value})} />
+            <TextFieldInput id="title" name="title" label="Title" value={this.state.title} onChange={e => this.setState({ title: e.target.value})} />
             <DateTimePicker className="new-entry-datetime" name="datetime" value={this.state.datetime} onChange={datetime => this.setState({ datetime })}/>
           </div>
-          <TextAreaInput id="desc" name="desc" value={this.state.desc} onChange={e => this.setState({ desc: e.target.value})} />
+          <TextAreaInput id="desc" name="desc" label="Daily Log" value={this.state.desc} onChange={e => this.setState({ desc: e.target.value})} />
+          <RatingInput value={this.state.overall} id="overall-rating" name="overall-rating"
+            label="Overall Feeling:" onChange={overall => this.setState({overall})} />
           <div className="inline-form">
-            <div className="inline-form-label">Allergens:</div>
-            <Multiselect name="allergens" className="new-entry-form-select" name="allergens" data={allergens} value={this.state.allergens} onChange={allergens => this.setState({allergens})} />
+            <div className="inline-form-label">Physical:</div>
+            <Multiselect name="physicals" className="new-entry-form-select" name="physicals" data={physicals} value={this.state.physicals} onChange={physicals => this.setState({physicals})} />
           </div>
           <div className="inline-form">
-            <div className="inline-form-label">Preps:</div>
-            <Multiselect name="preps" className="new-entry-form-select" data={preps} value={this.state.preps} onChange={preps => this.setState({preps})} />
+            <div className="inline-form-label">Emotional:</div>
+            <Multiselect name="emotionals" className="new-entry-form-select" name="emotionals" data={emotionals} value={this.state.emotionals} onChange={emotionals => this.setState({emotionals})} />
+          </div>
+          <div className="inline-form">
+            <div className="inline-form-label">Illness:</div>
+            <Multiselect name="ills" className="new-entry-form-select" name="ills" data={ills} value={this.state.ills} onChange={ills => this.setState({ills})} />
           </div>
           <div className="new-entry-form-submit-div">
             <button className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Cancel</button>
@@ -46,6 +54,16 @@ export default class NewDaily extends Component {
     );
   }
 }
+
+const RatingInput = ({value, onChange, id, name, label}) => {
+  return (
+    <div className='inline-form'>
+      <div className="inline-form-label">{label}</div>
+      <Rating className="new-entry-form-rating" id={id} name={name} onChange={onChange}
+        placeholderRate={value} start={0} stop={5} />
+    </div>
+  );
+};
 
 const TextFieldInput = ({value, onChange, id, name, label}) => {
   return (
