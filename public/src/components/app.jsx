@@ -4,6 +4,7 @@ import Header from './header.jsx';
 import Sidenav from './sidenav.jsx';
 import Journal from './journal.jsx';
 import History from './history.jsx';
+import Trends from './trends.jsx';
 import NewMeal from './forms/new-meal.jsx';
 import NewActivity from './forms/new-activity.jsx';
 import NewFeeling from './forms/new-feeling.jsx';
@@ -31,6 +32,7 @@ export default class App extends Component {
             <div className='app-content-module'>
               <Route exact path="/" render={props => (<Journal />)} />
               <Route path="/history" render={props => (<History />)} />
+              <Route path="/trends" render={props => (<Trends />)} />
               <Route path="/new/daily" render={props => (<NewDaily redirect={this.RootRedirect} />)} />
               <Route path="/new/meal" render={props => (<NewMeal redirect={this.RootRedirect} />)} />
               <Route path="/new/activity" render={props => (<NewActivity redirect={this.RootRedirect} />)} />

@@ -55,7 +55,14 @@ app.get('/api/formconfig', function(req, res) {
     if (debug) { console.log(config); }
     res.status(200).json(config);
   }).catch(err => res.status(500).send('Server error: ', err));
+});
 
+app.get('/api/outcomes', function(req, res) {
+  let username = req.query.username || 'user1';
+  User.findOne({username: username}).then(user => {
+    let outcomes = _.pick(user, ['feelPhys', 'feelEmos', 'feelIlls']);    
+    res.status(200).json(outcomes);
+  }).catch(err => res.status(500).send('Server error: ', err));
 });
 
 app.get('*', function(req, res) { // catch all route
