@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Header from './header.jsx';
 import Sidenav from './sidenav.jsx';
 import Journal from './journal.jsx';
+import NewMeal from './forms/new-meal.jsx';
 // mock data for now
 const defaultNavs = [{label: 'Journal', icon:'create', link:'/journal'},
                {label: 'Trends', icon:'show_chart', link:'/trends'},
@@ -18,13 +19,17 @@ const entries = [{type: 'daily', date:'2017-09-25', time:'18:00:00',
 
 export default class App extends Component {
   render() {
-
     return (
       <div className='app-container'>
         <Header loggedIn={true} />
         <div className='app-main-container'>
-          <Sidenav navs={defaultNavs} />
-          <Journal entries={entries} />
+          <div className='app-sidebar-container'>
+            <Sidenav navs={defaultNavs} />
+          </div>
+          <div className='app-content-module'>
+            <Journal entries={entries} />
+            <NewMeal />
+          </div>
         </div>
       </div>
     );
