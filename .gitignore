@@ -6,6 +6,9 @@
 ##webpacked bundle
 dist/
 
+#database
+app/data/mongo*
+
 # Logs
 logs
 *.log
