@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { findDOMNode } from 'react-dom';
+import axios from 'axios';
 import moment from 'moment';
 import momentLocalizer from 'react-widgets-moment';
 import DateTimePicker from 'react-widgets/lib/DateTimePicker';
@@ -15,7 +16,8 @@ export default class NewDaily extends Component {
     super(props);
     this.state = {
       datetime: new Date(), title: '', desc: '',
-      overall: 0, physicals: [], emotionals: [], ills: []
+      overall: 0, water: 0, sleep: 0, move: 0,
+      submitSuccess: false
     };
   }
 
@@ -27,48 +29,71 @@ export default class NewDaily extends Component {
     window.componentHandler.downgradeElements(element);
   }
 
+  handleSubmit(e) {
+    console.log(e);
+    e && e.preventDefault();
+    let formData = {
+      type: 'Daily', title: this.state.title, desc: this.state.desc,
+      datetime: this.state.datetime, details: {
+        overall: this.state.overall, water: this.state.water,
+        sleep: this.state.sleep, move: this.state.move}
+    };
+    axios.post('/api/entries', formData)
+      .then((res) => this.setState({submitSuccess: true}))
+      .catch((err) => console.log('error: ', err));
+  }
+
   render() {
-    return (
-      <div className="new-entry-form-div shadow">
-        <div className="new-entry-header"><span>New Daily</span></div>
-        <form onSubmit={this.onSubmit}>
-          <div className="inline-form">
-            <TextFieldInput id="title" name="title" label="Title" value={this.state.title} onChange={e => this.setState({ title: e.target.value})} />
-            <DateTimePicker className="new-entry-datetime" name="datetime" value={this.state.datetime} onChange={datetime => this.setState({ datetime })}/>
-          </div>
-          <TextAreaInput id="desc" name="desc" label="Daily Log" value={this.state.desc} onChange={e => this.setState({ desc: e.target.value})} />
-          <RatingInput value={this.state.overall} id="overall-rating" name="overall-rating"
-            label="Overall Feeling:" onChange={overall => this.setState({overall})} />
-          <div className="inline-form">
-            <div className="inline-form-group">
-              <div className="inline-form-label">Sleep (hrs):</div>
-              <NumberPicker name="sleep" className="new-entry-form-numpick"
-                step={1} min={0} onChange={sleep => this.setState({sleep})}
-                format="####"
-              />
+    return (this.state.submitSuccess) ?
+      (
+        <div className="new-entry-success">
+          Entry saved!
+          {this.props.redirect()}
+        </div>
+      ) : (
+        <div className="new-entry-form-div shadow">
+          <div className="new-entry-header"><span>New Daily</span></div>
+          <form onSubmit={(e) => this.handleSubmit(e)}>
+            <div className="inline-form">
+              <TextFieldInput id="title" name="title" label="Title" value={this.state.title}
+                onChange={e => this.setState({ title: e.target.value})} />
+              <DateTimePicker className="new-entry-datetime" name="datetime"
+                value={this.state.datetime} onChange={datetime => this.setState({ datetime })}/>
             </div>
-            <div className="inline-form-group">
-              <div className="inline-form-label">Water (L):</div>
-              <NumberPicker name="water" className="new-entry-form-numpick"
-                step={1} min={0} onChange={water => this.setState({water})}
-                format="####"
-              />
+            <TextAreaInput id="desc" name="desc" label="Daily Log" value={this.state.desc}
+              onChange={e => this.setState({ desc: e.target.value})} />
+            <RatingInput value={this.state.overall} id="overall-rating" name="overall-rating"
+              label="Overall Feeling:" onChange={overall => this.setState({overall})} />
+            <div className="inline-form">
+              <div className="inline-form-group">
+                <div className="inline-form-label">Sleep (hrs):</div>
+                <NumberPicker name="sleep" className="new-entry-form-numpick"
+                  step={1} min={0} onChange={sleep => this.setState({sleep})}
+                  format="####"
+                />
+              </div>
+              <div className="inline-form-group">
+                <div className="inline-form-label">Water (L):</div>
+                <NumberPicker name="water" className="new-entry-form-numpick"
+                  step={1} min={0} onChange={water => this.setState({water})}
+                  format="####"
+                />
+              </div>
+              <div className="inline-form-group">
+                <div className="inline-form-label">Movement (min):</div>
+                <NumberPicker name="movement" className="new-entry-form-numpick"
+                  step={15} min={0} onChange={movement => this.setState({movement})}
+                  format="####"
+                />
+              </div>
             </div>
-            <div className="inline-form-group">
-              <div className="inline-form-label">Movement (min):</div>
-              <NumberPicker name="movement" className="new-entry-form-numpick"
-                step={15} min={0} onChange={movement => this.setState({movement})}
-                format="####"
-              />
+            <div className="new-entry-form-submit-div">
+              <button className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Cancel</button>
+              <button className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Submit</button>
             </div>
-          </div>
-          <div className="new-entry-form-submit-div">
-            <button className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Cancel</button>
-            <button className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Submit</button>
-          </div>
-        </form>
-      </div>
-    );
+          </form>
+        </div>
+      );
   }
 }
 
