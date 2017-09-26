@@ -31,6 +31,7 @@ html, body, #app, .app-container {
   font-style: italic;
   color: white;
   margin-left: 20px;
+  text-decoration: none;
 }
 
 .app-header-nav-link {
@@ -182,6 +183,14 @@ html, body, #app, .app-container {
   flex: 1;
 }
 
+.new-entry-form-rating {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+  padding-left: 20px;
+}
+
 .new-entry-form-submit-div {
   display: flex;
   justify-content: space-between;
@@ -189,12 +198,8 @@ html, body, #app, .app-container {
   padding: 20px 0 10px 0;
 }
 
-.new-entry-form-rating {
-  flex: 1;
-  display: flex;
-  justify-content: space-between;
-  cursor: pointer;
-  padding-left: 20px;
+.new-entry-form-submit-div .mdl-button {
+  border-radius: 5px;
 }
 
 /* Util */
@@ -244,8 +249,4 @@ html, body, #app, .app-container {
 
 .mdl-button--colored {
   background-color: var(--mc1) !important;
-}
-
-.mdl-button {
-  border-radius: 5px;
 }

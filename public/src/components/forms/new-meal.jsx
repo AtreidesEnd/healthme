@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { findDOMNode } from 'react-dom';
 import moment from 'moment';
 import momentLocalizer from 'react-widgets-moment';
 import DateTimePicker from 'react-widgets/lib/DateTimePicker';
@@ -17,6 +18,14 @@ export default class NewMeal extends Component {
       datetime: new Date(), title: '', desc: '',
       allergens: [], preps: [],
     };
+  }
+
+  componentDidMount() {
+    window.componentHandler.upgradeElements(findDOMNode(this));
+  }
+  componentWillUnmount() {
+    const element = findDOMNode(this);
+    window.componentHandler.downgradeElements(element);
   }
 
   render() {
