@@ -42,9 +42,13 @@ export default class NewMeal extends Component {
       .catch((err) => console.log('error: ', err));
   }
 
+  handleCancel(e) {
+    e && e.preventDefault();
+    this.setState({submitCancel: true});
+  }
 
   render() {
-    return (this.state.submitSuccess) ?
+    return (this.state.submitSuccess || this.state.submitCancel) ?
       (
         <div className="new-entry-success">
           Entry saved!
@@ -68,8 +72,8 @@ export default class NewMeal extends Component {
               <Multiselect name="preps" className="new-entry-form-select" data={preps} value={this.state.preps} onChange={preps => this.setState({preps})} />
             </div>
             <div className="new-entry-form-submit-div">
-              <button className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Cancel</button>
-              <button className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Submit</button>
+              <button onClick={(e) => this.handleCancel(e)} className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Cancel</button>
+              <button type="submit" className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Submit</button>
             </div>
           </form>
         </div>
