@@ -173,10 +173,14 @@ html, body, #app, .app-container {
 
 .new-entry-form-textfield {
   display: block;
-  width: 100%;
+  flex: 1;
 }
 
-
+.new-entry-form-textarea {
+  display: block;
+  width: auto;
+  flex: 1;
+}
 
 .new-entry-form-submit-div {
   display: flex;
@@ -203,6 +207,7 @@ html, body, #app, .app-container {
 .inline-form {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
   padding: 10px 0;
@@ -213,7 +218,7 @@ html, body, #app, .app-container {
   flex-direction: row;
   align-items: center;
   flex: 1;
-  margin-right: 20px;
+  margin: 10px;
 }
 
 .inline-form-group:last-child {
@@ -222,10 +227,14 @@ html, body, #app, .app-container {
 
 .inline-form-label {
   flex: 0 0 auto;
-  min-width: 100px;
+  min-width: 75px;
   font-size: 1.1em;
-  margin-right: 30px;
+  margin-right: 20px;
   color: grey;
+}
+
+.new-entry-form-select {
+  flex: 1;
 }
 
 .inline-form-group .inline-form-label {

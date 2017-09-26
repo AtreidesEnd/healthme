@@ -5,6 +5,7 @@ import Journal from './journal.jsx';
 import NewMeal from './forms/new-meal.jsx';
 import NewActivity from './forms/new-activity.jsx';
 import NewFeeling from './forms/new-feeling.jsx';
+import NewDaily from './forms/new-daily.jsx';
 // mock data for now
 const defaultNavs = [{label: 'Journal', icon:'create', link:'/journal'},
                {label: 'Trends', icon:'show_chart', link:'/trends'},
@@ -30,6 +31,7 @@ export default class App extends Component {
           </div>
           <div className='app-content-module'>
             <Journal entries={entries} />
+            <NewDaily />
             <NewFeeling />
             <NewMeal />
             <NewActivity />

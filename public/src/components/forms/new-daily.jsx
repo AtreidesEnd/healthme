@@ -2,15 +2,12 @@ import React, { Component } from 'react';
 import moment from 'moment';
 import momentLocalizer from 'react-widgets-moment';
 import DateTimePicker from 'react-widgets/lib/DateTimePicker';
-import Multiselect from 'react-widgets/lib/Multiselect';
 import Rating from 'react-rating';
-
+import NumberPicker from 'react-widgets/lib/NumberPicker';
+import simpleNumberLocalizer from 'react-widgets-simple-number';
+simpleNumberLocalizer();
 moment.locale('en');
 momentLocalizer(moment);
-
-const physicals = ['Great', 'Stomach ache', 'Bloated', 'Headache', 'Tired', 'Sore', 'Hungry'];
-const emotionals = ['Happy / Balanced', 'Sad / Depressed', 'Nervous / Stressed', 'Grumpy / Irritated', 'Bored', 'Meh / Numb'];
-const ills = ['Cold', 'Fever', 'Cough', 'Sore Throat', 'Indigestion'];
 
 export default class NewDaily extends Component {
   constructor(props) {
@@ -34,16 +31,27 @@ export default class NewDaily extends Component {
           <RatingInput value={this.state.overall} id="overall-rating" name="overall-rating"
             label="Overall Feeling:" onChange={overall => this.setState({overall})} />
           <div className="inline-form">
-            <div className="inline-form-label">Physical:</div>
-            <Multiselect name="physicals" className="new-entry-form-select" name="physicals" data={physicals} value={this.state.physicals} onChange={physicals => this.setState({physicals})} />
-          </div>
-          <div className="inline-form">
-            <div className="inline-form-label">Emotional:</div>
-            <Multiselect name="emotionals" className="new-entry-form-select" name="emotionals" data={emotionals} value={this.state.emotionals} onChange={emotionals => this.setState({emotionals})} />
-          </div>
-          <div className="inline-form">
-            <div className="inline-form-label">Illness:</div>
-            <Multiselect name="ills" className="new-entry-form-select" name="ills" data={ills} value={this.state.ills} onChange={ills => this.setState({ills})} />
+            <div className="inline-form-group">
+              <div className="inline-form-label">Sleep (hrs):</div>
+              <NumberPicker name="sleep" className="new-entry-form-numpick"
+                step={1} min={0} onChange={sleep => this.setState({sleep})}
+                format="####"
+              />
+            </div>
+            <div className="inline-form-group">
+              <div className="inline-form-label">Water (L):</div>
+              <NumberPicker name="water" className="new-entry-form-numpick"
+                step={1} min={0} onChange={water => this.setState({water})}
+                format="####"
+              />
+            </div>
+            <div className="inline-form-group">
+              <div className="inline-form-label">Movement (min):</div>
+              <NumberPicker name="movement" className="new-entry-form-numpick"
+                step={15} min={0} onChange={movement => this.setState({movement})}
+                format="####"
+              />
+            </div>
           </div>
           <div className="new-entry-form-submit-div">
             <button className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Cancel</button>
@@ -79,7 +87,7 @@ const TextFieldInput = ({value, onChange, id, name, label}) => {
 
 const TextAreaInput = ({value, onChange, id, name, label}) => {
   return (
-    <div className="new-entry-form-textfield mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+    <div className="new-entry-form-textarea mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
       <label htmlFor={id} className="new-entry-text-label mdl-textfield__label">{label}</label>
       <textarea id={id} name={name} className="new-entry-text-input mdl-textfield__input"
         type="text" rows="2" value={value} onChange={onChange}>
