@@ -1,5 +1,6 @@
 var mongoClient = require('mongodb').MongoClient;
 var mongoose = require('mongoose');
+mongoose.Promise = global.Promise;
 // var bcrypt = require('bcrypt'); //someday...
 
 var url = 'mongodb://127.0.0.1:27017/healthme';

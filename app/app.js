@@ -18,8 +18,8 @@ app.use(cookieParser('secretKey13'));
 app.use(session({secret: 'shhh, it\'s a secret', resave: false, saveUninitialized: true}));
 
 app.get('/api/entries', function(req, res) {
-  Entry.find().limit(req.query.limit).sort({datetime: -1})
-    .then((entries) => res.status(200).json(entries));
+  Entry.find().limit(req.query.limit ? req.query.limit * 1 : 5).sort({datetime: -1}).exec()
+    .then((entries) => res.status(200).json(entries)).catch(err => res.status(500).send('Server error: ', err));
 });
 
 app.post('/api/entries', function(req, res) {

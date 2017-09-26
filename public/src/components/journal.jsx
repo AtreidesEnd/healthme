@@ -20,7 +20,7 @@ export default class Journal extends Component {
   }
 
   componentDidMount() {
-    axios.get('/api/entries').then(resp => {
+    axios.get('/api/entries', {params: {limit: 5}}).then(resp => {
       console.log(resp);
       this.setState({entries: resp.data});
     });
