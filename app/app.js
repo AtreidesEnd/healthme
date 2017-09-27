@@ -5,10 +5,12 @@ const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const { getTrendData } = require('./util/trends-collector.js');
 const { User, Entry } = require('./data/models/models.js');
+const { passport, pwdAuth, jwtAuth, jwtOptions } = require('./util/auth.js');
+const jwt = require('jsonwebtoken');
 const _ = require('lodash');
 const moment = require('moment');
 const app = express();
-var debug = true;
+const debug = true;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true}));
@@ -85,27 +87,16 @@ app.post('/api/users/signup', function(req, res) {
     .catch(err => res.status(500).send('Server error: ' + err));
 });
 
-app.post('/api/users/login', function(req, res) {
-  if (debug) { console.log('User login received: ', req.body); }
-  User.findOne({username: req.body.username}).then(user => {
-    if (user) {
-      user.comparePassword(req.body.password).then(match => {
-        if (match) {
-          res.status(200).send('Success! Logging you in.');
-        } else {
-          res.status(401).send('Username or password invalid.');
-        }
-      });
-    } else {
-      res.status(401).send('Username or password invalid.');
-    }
-  });
+app.post('/api/users/login', pwdAuth(), function(req, res) {
+  console.log('authentication successful for user: ', req.body.username);
+  const token = jwt.sign({username: req.body.username}, jwtOptions.secretOrKey);
+  res.json({message: 'Login successfull, here\'s your JWT', token: token});
 });
 
 app.get('*', function(req, res) { // catch all route
   res.sendFile(path.join(__dirname, '..', '/public/index.html'));
 });
 
-var port = 3000;
+const port = 3000;
 app.listen(port);
 console.log('Server now listening on port ' + port);
