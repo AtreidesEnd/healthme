@@ -21,7 +21,6 @@ export default class NewActivity extends Component {
       // form data
       datetime: new Date(), title: '', desc: '',
       activityTypes: [], intensity: '', duration: 0,
-      submitSuccess: false,
       // form config
       actTypeOpts: [], intensityOpts: []
     };
@@ -38,13 +37,15 @@ export default class NewActivity extends Component {
   }
 
   getFormConfig() {
-    axios.get('/api/formconfig', {params: {type: 'activity', user: 'user1'}})
-      .then(resp => {
-        this.setState({
-          actTypeOpts: resp.data.actTypes,
-          intensityOpts: resp.data.actInts
-        });
-      }).catch(err => console.log('Error: ', err));
+    axios.get('/api/formconfig', {
+      params: {type: 'activity', user: 'user1'},
+      headers: {'Authorization': 'bearer ' + this.props.auth()}
+    }).then(resp => {
+      this.setState({
+        actTypeOpts: resp.data.actTypes,
+        intensityOpts: resp.data.actInts
+      });
+    }).catch(err => console.log('Error: ', err));
   }
 
   handleSubmit(e) {
@@ -55,62 +56,56 @@ export default class NewActivity extends Component {
         activityTypes: this.state.activityTypes, intensity: this.state.intensity,
         duration: this.state.duration}
     };
-    axios.post('/api/entries', formData)
-      .then((res) => this.setState({submitSuccess: true}))
+    axios.post('/api/entries', formData, {headers: {'Authorization': 'bearer ' + this.props.auth()}})
+      .then((res) => this.props.history.push({pathname: '/'}))
       .catch((err) => console.log('error: ', err));
   }
 
   handleCancel(e) {
     e && e.preventDefault();
-    this.setState({submitCancel: true});
+    this.props.history.push({pathname: '/'});
   }
 
   render() {
-    return (this.state.submitSuccess || this.state.submitCancel) ?
-      (
-        <div className="new-entry-success">
-          Entry saved!
-          {this.props.redirect()}
-        </div>
-      ) : (
-        <div className="new-entry-form-div shadow">
-          <div className="new-entry-header"><span>New Activity</span></div>
-          <form onSubmit={(e) => this.handleSubmit(e)}>
-            <div className="inline-form">
-              <TextFieldInput id="title" name="title" label="Title" value={this.state.title}
-                onChange={e => this.setState({title: e.target.value})} />
-              <DateTimePicker id="datetime" name="datetime" className="new-entry-datetime"
-                value={this.state.datetime} onChange={datetime => this.setState({ datetime: datetime })}/>
+    return (
+      <div className="new-entry-form-div shadow">
+        <div className="new-entry-header"><span>New Activity</span></div>
+        <form onSubmit={(e) => this.handleSubmit(e)}>
+          <div className="inline-form">
+            <TextFieldInput id="title" name="title" label="Title" value={this.state.title}
+              onChange={e => this.setState({title: e.target.value})} />
+            <DateTimePicker id="datetime" name="datetime" className="new-entry-datetime"
+              value={this.state.datetime} onChange={datetime => this.setState({ datetime: datetime })}/>
+          </div>
+          <TextAreaInput id="desc" name="desc" label="Description" value={this.state.desc}
+            onChange={e => this.setState({ desc: e.target.value})} />
+          <div className="inline-form">
+            <div className="inline-form-label">Activity Types:</div>
+            <Multiselect name="activity-types" className="new-entry-form-select"
+              name="activity-types" data={this.state.actTypeOpts} value={this.state.activityTypes}
+              onChange={activityTypes => this.setState({activityTypes: activityTypes})} />
+          </div>
+          <div className="inline-form">
+            <div className="inline-form-group">
+              <div className="inline-form-label">Intensity:</div>
+              <DropdownList name="intensity" className="new-entry-form-select"
+                data={this.state.intensityOpts} value={this.state.intensity}
+                onChange={intensity => this.setState({intensity})} />
             </div>
-            <TextAreaInput id="desc" name="desc" label="Description" value={this.state.desc}
-              onChange={e => this.setState({ desc: e.target.value})} />
-            <div className="inline-form">
-              <div className="inline-form-label">Activity Types:</div>
-              <Multiselect name="activity-types" className="new-entry-form-select"
-                name="activity-types" data={this.state.actTypeOpts} value={this.state.activityTypes}
-                onChange={activityTypes => this.setState({activityTypes: activityTypes})} />
+            <div className="inline-form-group">
+              <div className="inline-form-label">Duration (min):</div>
+              <NumberPicker name="duration" className="new-entry-form-numpick"
+                step={15} min={0} onChange={duration => this.setState({duration})}
+                format="####"
+              />
             </div>
-            <div className="inline-form">
-              <div className="inline-form-group">
-                <div className="inline-form-label">Intensity:</div>
-                <DropdownList name="intensity" className="new-entry-form-select"
-                  data={this.state.intensityOpts} value={this.state.intensity}
-                  onChange={intensity => this.setState({intensity})} />
-              </div>
-              <div className="inline-form-group">
-                <div className="inline-form-label">Duration (min):</div>
-                <NumberPicker name="duration" className="new-entry-form-numpick"
-                  step={15} min={0} onChange={duration => this.setState({duration})}
-                  format="####"
-                />
-              </div>
-            </div>
-            <div className="new-entry-form-submit-div">
-              <button onClick={(e) => this.handleCancel(e)} className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Cancel</button>
-              <button type="submit" className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Submit</button>
-            </div>
-          </form>
-        </div>
-      );
+          </div>
+          <div className="new-entry-form-submit-div">
+            <button onClick={(e) => this.handleCancel(e)} className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Cancel</button>
+            <button type="submit" className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Submit</button>
+          </div>
+        </form>
+      </div>
+    );
   }
 }
