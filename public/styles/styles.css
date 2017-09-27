@@ -203,8 +203,9 @@ html, body, #app, .app-container {
 .new-entry-form-div form {
   padding: 0px 10px 10px 10px;
 }
-
-.new-entry-header {
+/* TODO: refactor header into its own style */
+.new-entry-header,
+.login-header {
   height: 48px;
   display: flex;
   align-items: center;
@@ -213,7 +214,8 @@ html, body, #app, .app-container {
   padding-left: 10px;
 }
 
-.new-entry-header span {
+.new-entry-header span,
+.login-header span {
   color: white;
   font-size: 1.7em;
 }
@@ -227,6 +229,7 @@ html, body, #app, .app-container {
 .new-entry-form-textfield {
   display: block;
   flex: 1;
+  width: auto;
 }
 
 .new-entry-form-textarea {
@@ -360,6 +363,21 @@ html, body, #app, .app-container {
 .trends-table-avg-label {
   font-weight: bold;
 }
+
+/* Login and Signup Forms  */
+.login-container {
+  max-width: 480px;
+  margin: auto;
+}
+
+.login-container form {
+  padding: 20px;
+}
+
+.login-container .new-entry-form-submit-div {
+  justify-content: space-around;
+}
+
 
 /* Util */
 .shadow {

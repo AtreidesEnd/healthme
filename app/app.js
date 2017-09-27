@@ -68,6 +68,40 @@ app.get('/api/outcomes', function(req, res) {
 
 app.get('/api/trenddata', getTrendData);
 
+app.post('/api/users/signup', function(req, res) {
+  if (debug) { console.log('User signup received: ', req.body); }
+  User.findOne({username: req.body.username}).then(user => {
+    if (user) {
+      res.status(422).send('Username already taken.');
+    } else {
+      let newUser = new User({
+        username: req.body.username,
+        password: req.body.password,
+        email: req.body.email,
+      });
+      return newUser.save();
+    }
+  }).then(() => res.status(201).send('User created'))
+    .catch(err => res.status(500).send('Server error: ' + err));
+});
+
+app.post('/api/users/login', function(req, res) {
+  if (debug) { console.log('User login received: ', req.body); }
+  User.findOne({username: req.body.username}).then(user => {
+    if (user) {
+      user.comparePassword(req.body.password).then(match => {
+        if (match) {
+          res.status(200).send('Success! Logging you in.');
+        } else {
+          res.status(401).send('Username or password invalid.');
+        }
+      });
+    } else {
+      res.status(401).send('Username or password invalid.');
+    }
+  });
+});
+
 app.get('*', function(req, res) { // catch all route
   res.sendFile(path.join(__dirname, '..', '/public/index.html'));
 });

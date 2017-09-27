@@ -1,7 +1,7 @@
 var mongoClient = require('mongodb').MongoClient;
 var mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
-// var bcrypt = require('bcrypt'); //someday...
+var bcrypt = require('bcrypt');
 
 var url = 'mongodb://127.0.0.1:27017/healthme';
 
@@ -23,6 +23,17 @@ userSchema = new mongoose.Schema(
   },
   {timestamps: true}
 );
+
+userSchema.pre('save', function(next) {
+  return bcrypt.hash(this.password, 10).then(hash => {
+    this.password = hash;
+    next();
+  });
+});
+
+userSchema.methods.comparePassword = function(pwd) {
+  return bcrypt.compare(pwd, this.password);
+};
 
 entrySchema = new mongoose.Schema(
   {
