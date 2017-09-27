@@ -36,7 +36,6 @@ export default class Trends extends Component {
       params: {outcome: this.state.selectedOutcome, includeRaw: true},
       headers: {'Authorization': 'bearer ' + this.props.auth()}
     }).then(resp => {
-      console.log('TrendData Response: ', resp);
       this.setState({trendData: resp.data});
     }).catch(err => console.log(err));
   }
@@ -50,7 +49,6 @@ export default class Trends extends Component {
             value={this.state.selectedOutcome} data={this.state.outcomes}
             textField="text" groupBy="group"
             onChange={selectedOutcome => {
-              console.log(selectedOutcome);
               this.setState({selectedOutcome}, this.getTrendData);
             }} />
         </div>
@@ -70,7 +68,6 @@ export default class Trends extends Component {
 }
 
 const TrendTable = ({data}) => {
-  console.log('TrendData is: ', data);
   return (
     <div className="trends-table-container">
       <table className="trends-table mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
@@ -92,7 +89,6 @@ const TrendTable = ({data}) => {
 };
 
 const AvgTable = ({data}) => {
-  console.log('rendering avg table...');
   return (
     <div className="trends-table-avg-container shadow">
       <div className="trends-table-avg-header">
