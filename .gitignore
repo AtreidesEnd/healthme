@@ -4,7 +4,7 @@
 ## API keys ##
 
 ##webpacked bundle
-dist/
+public/dist
 
 #database
 app/data/mongo*
