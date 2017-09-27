@@ -14,8 +14,10 @@ export default class History extends Component {
   }
 
   componentDidMount() {
-    axios.get('/api/entries', {params: {limit: 100}}).then(resp => {
-      console.log(resp);
+    axios.get('/api/entries', {
+      params: {limit: 100},
+      headers: {'Authorization': 'bearer ' + this.props.auth()}
+    }).then(resp => {
       this.setState({entries: resp.data});
     });
   }

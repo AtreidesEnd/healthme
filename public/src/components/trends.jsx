@@ -18,13 +18,11 @@ export default class Trends extends Component {
     this.getOutcomesForUser();
   }
 
-  getOutcomesForUser(user = 'user1') {
-    axios.get('/api/outcomes', {params: {user: user}})
+  getOutcomesForUser() {
+    axios.get('/api/outcomes', {headers: {'Authorization': 'bearer ' + this.props.auth()}})
       .then(resp => {
         const data = resp.data;
         let outcomes = [];
-        console.log(data);
-        console.log(data.feelPhys);
         data.feelPhys.forEach((feeling) => outcomes.push({group: 'Physical', text: feeling}));
         data.feelEmos.forEach((feeling) => outcomes.push({group: 'Emotional', text: feeling}));
         data.feelIlls.forEach((feeling) => outcomes.push({group: 'Illness', text: feeling}));
@@ -33,14 +31,14 @@ export default class Trends extends Component {
       .catch(err => console.log('Error: ', err));
   }
 
-  getTrendData(user = 'user1') {
-    console.log('This state outcome is: ', this.state.selectedOutcome);
-    console.log('Getting trend data for: ', user, ' and outcome: ', this.state.selectedOutcome);
-    axios.get('/api/trenddata', {params: {user: user, outcome: this.state.selectedOutcome, includeRaw: true}})
-      .then(resp => {
-        console.log('TrendData Response: ', resp);
-        this.setState({trendData: resp.data});
-      }).catch(err => console.log(err));
+  getTrendData() {
+    axios.get('/api/trenddata', {
+      params: {outcome: this.state.selectedOutcome, includeRaw: true},
+      headers: {'Authorization': 'bearer ' + this.props.auth()}
+    }).then(resp => {
+      console.log('TrendData Response: ', resp);
+      this.setState({trendData: resp.data});
+    }).catch(err => console.log(err));
   }
 
   render() {
