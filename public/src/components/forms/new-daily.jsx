@@ -100,7 +100,7 @@ export default class NewDaily extends Component {
               <div className="inline-form-group">
                 <div className="inline-form-label">Movement (min):</div>
                 <NumberPicker id="movement" name="movement" className="new-entry-form-numpick"
-                  step={15} min={0} onChange={movement => this.setState({movement})}
+                  step={15} min={0} onChange={move => this.setState({move})}
                   format="####"
                 />
               </div>
