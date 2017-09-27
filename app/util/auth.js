@@ -26,7 +26,7 @@ module.exports.jwtOptions = jwtOptions = {
 };
 
 passport.use(new JwtStrategy(jwtOptions, function(jwtPayload, done) {
-  console.log('jwt token payload received', jwtPayload);
+  if (debug) { console.log('jwt token payload received', jwtPayload); }
   User.findOne({username: jwtPayload.username}).then(user => {
     if (user) {
       done(null, user);
