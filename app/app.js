@@ -57,7 +57,7 @@ app.get('/api/formconfig', function(req, res) {
     res.status(200).json(config);
   }).catch(err => res.status(500).send('Server error: ', err));
 });
-
+// TODO: make this result data driven based on entries!
 app.get('/api/outcomes', function(req, res) {
   let username = req.query.username || 'user1';
   User.findOne({username: username}).then(user => {
