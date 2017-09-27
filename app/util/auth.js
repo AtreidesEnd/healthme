@@ -4,7 +4,7 @@ const passportJWT = require('passport-jwt');
 const JwtStrategy = passportJWT.Strategy;
 const ExtractJwt = passportJWT.ExtractJwt;
 const { User } = require('../data/models/models.js');
-const debug = true;
+const debug = false;
 
 // ====== Passport Utilities Setup ====== \\
 passport.serializeUser((user, done) => {
