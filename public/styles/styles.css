@@ -1,6 +1,6 @@
 * {
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box !important;
+  box-sizing: border-box !important;
 }
 
 html, body, #app, .app-container {
@@ -57,7 +57,8 @@ html, body, #app, .app-container {
 }
 
 .app-content-module {
-  flex: 1;
+  flex: 1 1 0;
+  min-width: 0;
 }
 
 /*  Nav  */
@@ -108,6 +109,7 @@ html, body, #app, .app-container {
 /*  Journal Module View */
 .journal-container {
   border-radius: 5px;
+  width: 100%;
 }
 
 .journal-header {
@@ -289,6 +291,22 @@ html, body, #app, .app-container {
   margin-right: 10px;
   flex: 0 0 auto;
 }
+
+/* Trends */
+.trends-header-title {
+  font-size: 1.5em;
+  font-style: italic;
+  color: var(--mc1);
+  margin-right: 50px;
+}
+
+.trends-outcome-select {
+  flex: 1;
+}
+
+
+
+
 
 /* Util */
 .shadow {
