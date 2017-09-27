@@ -9,16 +9,13 @@ const outcomeMap = {
   'Illness': 'details.ills'};
 
 module.exports.getTrendData = (req, res) => {
-  const username = req.query.username || 'user1';
   const outcomeQuery = JSON.parse(req.query.outcome);
   const outcome = outcomeQuery.text;
   const outcomeType = outcomeMap[outcomeQuery.group];
-  let userId = null;
+  let userId = ObjectId(req.user._id);
   let sourceEntries = null;
-  User.findOne({username: username}).then(user => (userId = new ObjectId(user._id)))
-    .then(() => {
-      return Entry.find({userId: userId, [outcomeType]: outcome });
-    }).then(entries => {
+  Entry.find({userId: userId, [outcomeType]: outcome })
+    .then(entries => {
       let subqs = [];
       sourceEntries = entries;
       let duration = moment.duration(4, 'hours');
