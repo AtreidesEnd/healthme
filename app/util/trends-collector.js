@@ -10,18 +10,15 @@ const outcomeMap = {
 
 module.exports.getTrendData = (req, res) => {
   const username = req.query.username || 'user1';
-  console.log('Query is: ', req.query);
   const outcomeQuery = JSON.parse(req.query.outcome);
   const outcome = outcomeQuery.text;
   const outcomeType = outcomeMap[outcomeQuery.group];
-  console.log('Outcome: ', outcome, '  TypeQuery: ', outcomeType);
   let userId = null;
   let sourceEntries = null;
   User.findOne({username: username}).then(user => (userId = new ObjectId(user._id)))
     .then(() => {
       return Entry.find({userId: userId, [outcomeType]: outcome });
     }).then(entries => {
-      console.log('Found entries for user: ', username, ' and outcome: ', outcome);
       let subqs = [];
       sourceEntries = entries;
       let duration = moment.duration(4, 'hours');
