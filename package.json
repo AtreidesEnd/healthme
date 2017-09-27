@@ -6,6 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon app/app.js",
+    "start:debug": "DEBUG=true nodemon app/app.js",
+    "start:debugprod":"PORT=80 DEBUG=true nodemon app/app.js",
+    "start:prod":"PORT=80 nodemon app/app.js",
     "pack": "webpack --watch"
   },
   "repository": {
