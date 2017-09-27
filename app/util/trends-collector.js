@@ -30,7 +30,7 @@ module.exports.getTrendData = (req, res) => {
       });
       return Promise.all(subqs);
     }).then(qs => {
-      let qset = _.uniqBy(_.flatten(qs), '_id');
+      let qset = _.uniqBy(_.flatten(qs), a=>a._id.toString());
       let trendData = {
         drivers: {},
         sleep: {sum: 0, count: 0},
@@ -49,6 +49,7 @@ module.exports.getTrendData = (req, res) => {
           ['move', 'sleep', 'water', 'overall'].forEach(attr => driverSumInc(entry, attr, trendData));
         }
       });
+      trendData.drivers = _.sortBy(_.map(trendData.drivers, (v, k) => [k, v]), arr => arr[1] * -1);
       ['move', 'sleep', 'water', 'overall'].forEach(attr => convToAvg(attr, trendData));
       if (req.query.includeRaw) {
         trendData.raw = {linkedEntries: qset, sourceEntries: sourceEntries};
@@ -58,7 +59,11 @@ module.exports.getTrendData = (req, res) => {
 };
 
 const driverInc = (d, trendData) => {
-  if (trendData.drivers[d]) { trendData.drivers[d]++; } else { trendData.drivers[d] = 1; }
+  if (trendData.drivers[d]) {
+    trendData.drivers[d]++;
+  } else {
+    trendData.drivers[d] = 1;
+  }
 };
 
 const driverSumInc = (entry, attr, trendData) => {

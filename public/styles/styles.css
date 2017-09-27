@@ -304,9 +304,62 @@ html, body, #app, .app-container {
   flex: 1;
 }
 
+.trends-summary-container {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 10px;
+}
 
+.trends-table-container {
+  flex: 3 1 300px;
+}
 
+.trends-table {
+  width: 100%;
+}
 
+.trends-table-header {
+  font-size: 1.1em !important;
+  color: white !important;
+  background-color: var(--mc1);
+  vertical-align: middle !important;
+  padding-bottom: 0 !important;
+  height: 36px !important;
+}
+
+.trends-table-avg-container {
+  padding: 10px;
+  flex: 1 1 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+}
+
+.trends-table-avg-header {
+  margin-bottom: 20px;
+}
+
+.trends-table-avg-header span {
+  font-size: 1.1em;
+  font-weight: bold;
+  color: var(--mc1);
+  font-style: italic;
+}
+
+.trends-table-avg-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.trends-table-avg-row:last-child {
+  margin-bottom: 0;
+}
+
+.trends-table-avg-label {
+  font-weight: bold;
+}
 
 /* Util */
 .shadow {
