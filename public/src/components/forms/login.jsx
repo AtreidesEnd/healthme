@@ -9,7 +9,7 @@ export default class Login extends Component {
     this.state = {
       username: '',
       password: '',
-      formWarning: '',
+      formWarning: ''
     };
   }
 
@@ -28,13 +28,16 @@ export default class Login extends Component {
       username: this.state.username,
       password: this.state.password
     }).then(resp => {
-      console.log(resp);
+      if (resp.status === 200 && resp.statusText === 'OK') { // successful login
+        this.props.onLogin(resp.data.token);
+        this.props.history.push({pathname: '/'});
+      }
     }).catch(err => this.setState({formWarning: 'Server error: ' + err}));
   }
 
   goToSignup(e) {
     e && e.preventDefault();
-    console.log('not setup yet!!!');
+    this.props.history.push({pathname: '/signup'});
   }
 
   render() {
@@ -49,7 +52,7 @@ export default class Login extends Component {
             value={this.state.password} type="password"
             onChange={e => this.setState({password: e.target.value})} />
           <div className="new-entry-form-submit-div">
-            <button onClick={(e) => this.goToSignup(e)} className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">&larr; Signup</button>
+            <button type="button" onClick={(e) => this.goToSignup(e)} className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">&larr; Signup</button>
             <button type="submit" className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Login</button>
           </div>
         </form>

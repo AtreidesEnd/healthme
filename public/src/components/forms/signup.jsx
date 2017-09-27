@@ -11,7 +11,7 @@ export default class Login extends Component {
       password: '',
       confPassword: '',
       email: '',
-      formWarning: '',
+      formWarning: ''
     };
   }
 
@@ -49,7 +49,7 @@ export default class Login extends Component {
 
   goToLogin(e) {
     e && e.preventDefault();
-    console.log('not setup yet!!!');
+    this.props.history.push({pathname: '/login'});
   }
 
   render() {
@@ -68,7 +68,7 @@ export default class Login extends Component {
             onChange={e => this.setState({confPassword: e.target.value})} />
           {this.state.formWarning && <div className="form-warning">{this.state.formWarning}</div>}
           <div className="new-entry-form-submit-div">
-            <button onClick={(e) => this.goToSignup(e)} className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Login &rarr;</button>
+            <button onClick={(e) => this.goToLogin(e)} className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Login &rarr;</button>
             <button type="submit" className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Submit</button>
           </div>
         </form>
