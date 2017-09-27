@@ -81,8 +81,10 @@ app.post('/api/users/signup', function(req, res) {
       });
       return newUser.save();
     }
-  }).then(() => res.status(201).send('User created'))
-    .catch(err => res.status(500).send('Server error: ' + err));
+  }).then(() => {
+    const token = jwt.sign({username: req.body.username}, jwtOptions.secretOrKey);
+    res.status(201).json({message: 'Login successfull, here\'s your JWT', token: token});
+  }).catch(err => res.status(500).send('Server error: ' + err));
 });
 
 app.post('/api/users/login', pwdAuth(), function(req, res) {

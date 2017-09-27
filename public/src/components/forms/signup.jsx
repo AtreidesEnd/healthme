@@ -32,10 +32,12 @@ export default class Login extends Component {
         password: this.state.password,
         email: this.state.email,
       }).then(resp => {
-        console.log(resp);
+        if (resp.status === 201 && resp.statusText === 'Created') { // successful login
+          this.props.onLogin(resp.data.token);
+          this.props.history.push({pathname: '/'});
+        }
       }).catch(err => this.setState({formWarning: 'Server error: ' + err}));
     }
-    console.log(this.state);
   }
 
   validateForm(e) {
