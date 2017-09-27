@@ -3,9 +3,10 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
-const handler = require('./handlers/route-handler');
+const { getTrendData } = require('./util/trends-collector.js');
 const { User, Entry } = require('./data/models/models.js');
 const _ = require('lodash');
+const moment = require('moment');
 const app = express();
 var debug = true;
 
@@ -60,10 +61,12 @@ app.get('/api/formconfig', function(req, res) {
 app.get('/api/outcomes', function(req, res) {
   let username = req.query.username || 'user1';
   User.findOne({username: username}).then(user => {
-    let outcomes = _.pick(user, ['feelPhys', 'feelEmos', 'feelIlls']);    
+    let outcomes = _.pick(user, ['feelPhys', 'feelEmos', 'feelIlls']);
     res.status(200).json(outcomes);
   }).catch(err => res.status(500).send('Server error: ', err));
 });
+
+app.get('/api/trenddata', getTrendData);
 
 app.get('*', function(req, res) { // catch all route
   res.sendFile(path.join(__dirname, '..', '/public/index.html'));
