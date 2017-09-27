@@ -9,13 +9,13 @@ const jwt = require('jsonwebtoken');
 const _ = require('lodash');
 const moment = require('moment');
 const app = express();
-const debug = false;
+const debug = process.env.DEBUG || false;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true}));
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
-if (debug) { app.get('*', function(req, res, next) { if (debug) { console.log('passing through url: ', req.url); } next(); }); }
+if (debug) { app.get('*', function(req, res, next) { if (debug) { console.log('Received ', req.method, ' request from url: ', req.url); } next(); }); }
 
 app.get('/api/entries', jwtAuth(), function(req, res) {
   Entry.find({userId: ObjectId(req.user._id)}).limit(req.query.limit ? req.query.limit * 1 : 5).sort({datetime: -1}).exec()
@@ -93,6 +93,6 @@ app.get('*', function(req, res) { // catch all route
   res.sendFile(path.join(__dirname, '..', '/public/index.html'));
 });
 
-const port = 3000;
+const port = process.env.PORT || 3000;
 app.listen(port);
 console.log('Server now listening on port ' + port);
