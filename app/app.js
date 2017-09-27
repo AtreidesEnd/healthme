@@ -1,8 +1,6 @@
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
-const session = require('express-session');
-const cookieParser = require('cookie-parser');
 const ObjectId = require('mongoose').Types.ObjectId;
 const { getTrendData } = require('./util/trends-collector.js');
 const { User, Entry } = require('./data/models/models.js');
@@ -16,7 +14,6 @@ const debug = false;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true}));
 app.use(express.static(path.join(__dirname, '..', 'public')));
-app.use(session({secret: 'shhh, it\'s a secret', resave: false, saveUninitialized: true}));
 
 if (debug) { app.get('*', function(req, res, next) { if (debug) { console.log('passing through url: ', req.url); } next(); }); }
 
