@@ -1,7 +1,7 @@
 {
   "name": "healthme",
   "version": "0.0.1",
-  "description": "An app to help you keep a journal of what you've eaten, done, and how you feel - find out what's working or not working for you!",
+  "description": "An app to help you keep a journal of what you've eaten, done, and how you feel - find out what's working or not working for you",
   "main": "app/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
